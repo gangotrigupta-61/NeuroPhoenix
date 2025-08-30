@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroPhoenix</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body, html {
+  height: 100%;
+  color: #fff;
+  overflow-y: auto;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 220px; height: 100%;
+  background: rgba(0,0,0,0.7);
+  padding: 20px;
+  color: white;
+  z-index: 2;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+  color: #ffb6c1;
+}
+
+/* Background slideshow */
+.background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+}
+
+.bg {
+  position: absolute;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
+}
+
+.bg.active {
+  opacity: 1;
+}
+
+/* Journal container */
+.journal-container {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  padding: 30px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 20px;
+  text-align: center;
+}
+
+.journal-container h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+  margin-bottom: 15px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  background: #ff6f91;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #ff3b6f;
+}
+
+#counter {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+#savedEntries {
+  list-style: none;
+  margin-top: 15px;
+  text-align: left;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#savedEntries li {
+  background: rgba(255,255,255,0.1);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deleteBtn {
+  background: #ff4d6d;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 14px;
+}
+
+.deleteBtn:hover {
+  background: #e60039;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .journal-container {
+    width: 80%;
+    padding: 20px;
+  }
+  .journal-container h1 {
+    font-size: 24px;
+  }
+  textarea {
+    height: 130px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+    padding: 15px;
+  }
+  .journal-container {
+    width: 85%;
+    padding: 20px;
+  }
+  .controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  button {
+    width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+  .sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .journal-container {
+    position: relative;
+    top: auto; left: auto;
+    transform: none;
+    width: 90%;
+    margin: 20px auto;
+  }
+  .journal-container h1 {
+    font-size: 20px;
+  }
+  textarea {
+    height: 120px;
+    font-size: 14px;
+  }
+  button {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>🌼 Journal</h2>
+    <ul>
+      <li><a href="{{ url_for('explore') }}">🏠 Back to Home</a></li>
+      <!-- <li><a href="login.html">🚪 Logout</a></li> -->
+    </ul>
+  </div>
+
+  <!-- Background Slideshow -->
+  <div class="background">
+    <div class="bg active" style="background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1500&q=80');"></div>
+    <div class="bg" style="background-image: url('https://images.unsplash.com/photo-1509043759401-136742328bb3?auto=format&fit=crop&w=1500&q=80');"></div>
+  
+    
+  </div>
+
+  <!-- Journal Section (Center Screen) -->
+  <div class="journal-container">
+    <h1>🌸 My Journal</h1>
+    <textarea id="journalEntry" placeholder="Write your thoughts..."></textarea>
+    <div class="controls">
+      <button id="saveBtn">💾 Save Entry</button>
+      <p id="counter">Words: 0 | Characters: 0</p>
+    </div>
+
+    <h2>📖 Previous Entries</h2>
+    <ul id="savedEntries"></ul>
+  </div>
+
+  <script>
+    // 🌸 Background Slideshow
+let slides = document.querySelectorAll(".bg");
+let index = 0;
+
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 8000);
+
+// 📝 Elements
+const saveBtn = document.getElementById("saveBtn");
+const textarea = document.getElementById("journalEntry");
+const savedEntries = document.getElementById("savedEntries");
+const counter = document.getElementById("counter");
+
+// 🌼 Load existing entries on page load
+window.onload = () => {
+  renderEntries();
+};
+
+// 💾 Save entry
+saveBtn.addEventListener("click", () => {
+  let text = textarea.value.trim();
+  if (text) {
+    let entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+    entries.push(text);
+    localStorage.setItem("journalEntries", JSON.stringify(entries));
+    textarea.value = "";
+    updateCounter();
+    renderEntries();
+  }
+});
+
+// 🗑️ Delete entry
+function deleteEntry(index) {
+  let entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+  entries.splice(index, 1);
+  localStorage.setItem("journalEntries", JSON.stringify(entries));
+  renderEntries();
+}
+
+// 📖 Render all entries
+function renderEntries() {
+  savedEntries.innerHTML = "";
+  let entries = JSON.parse(localStorage.getItem("journalEntries")) || [];
+  entries.forEach((entry, i) => {
+    let li = document.createElement("li");
+    li.innerHTML = `
+      <span>${entry}</span>
+      <button class="deleteBtn" onclick="deleteEntry(${i})">🗑️ Delete</button>
+    `;
+    savedEntries.appendChild(li);
+  });
+}
+
+// ✨ Word + Character Counter
+textarea.addEventListener("input", updateCounter);
+
+function updateCounter() {
+  let text = textarea.value.trim();
+  let words = text.length > 0 ? text.split(/\s+/).length : 0;
+  let chars = text.length;
+  counter.textContent = `Words: ${words} | Characters: ${chars}`;
+}
+
+  </script>
+</body>
+</html>

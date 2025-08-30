@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroPhoenix</title>
+  <style>
+    body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #f0f8ff, #e0ffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: rgba(255,255,255,0.95);
+  padding: 20px 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 550px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-sizing: border-box;
+}
+
+input {
+  width: 65%;
+  padding: 10px;
+  margin: 10px 5px 10px 0;
+  border-radius: 10px;
+  border: 2px solid #4A90E2;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #4A90E2;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #357ABD;
+}
+
+#habitList {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+#habitList li {
+  background: #B2EBF2;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.habit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.habit-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap; /* ✅ Prevents overflow on small screens */
+}
+
+.habit-text {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.streak {
+  font-size: 14px;
+  color: #388E3C;
+}
+
+.progress-bar {
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 5px 0;
+  height: 15px;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(to right, #4CAF50, #81C784);
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.3s;
+}
+
+.completeBtn, .deleteBtn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.completeBtn {
+  background: #4CAF50;
+  color: white;
+}
+
+.completeBtn:hover { background: #388E3C; }
+
+.deleteBtn {
+  background: #FF3D00;
+  color: white;
+}
+
+.deleteBtn:hover { background: #C62828; }
+
+/* -------------------- */
+/* ✅ Responsive Tweaks */
+/* -------------------- */
+@media (max-width: 768px) {
+  input {
+    width: 60%;
+    font-size: 15px;
+  }
+  button {
+    padding: 8px 16px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px 20px;
+  }
+  input {
+    width: 100%;       /* ✅ input full width on mobile */
+    margin: 8px 0;
+    font-size: 14px;
+  }
+  button {
+    width: 100%;       /* ✅ button full width on mobile */
+    margin: 8px 0;
+    font-size: 14px;
+  }
+  .habit-text {
+    font-size: 14px;
+  }
+  .streak {
+    font-size: 12px;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>📋 Habit Tracker</h1>
+    <p>Track your daily habits, see streaks, and weekly progress!</p>
+
+    <div class="input-section">
+      <input type="text" id="habitInput" placeholder="Enter a new habit">
+      <button id="addHabitBtn">➕ Add Habit</button>
+    </div>
+
+    <h2>Your Habits</h2>
+    <ul id="habitList"></ul>
+
+    <button onclick="window.location.href='{{ url_for('explore') }}'" class="homeBtn">🏠 Back to Home</button>
+  </div>
+
+  <script>
+    const habitInput = document.getElementById('habitInput');
+const addHabitBtn = document.getElementById('addHabitBtn');
+const habitList = document.getElementById('habitList');
+
+const today = new Date().toLocaleDateString();
+
+// Load habits from localStorage
+let data = JSON.parse(localStorage.getItem('habitData')) || { date: today, habits: [] };
+
+// Daily reset
+if(data.date !== today){
+  data.date = today;
+  data.habits.forEach(h => h.completed = false);
+  localStorage.setItem('habitData', JSON.stringify(data));
+}
+
+renderHabits();
+
+// Add habit
+addHabitBtn.addEventListener('click', () => {
+  const habitText = habitInput.value.trim();
+  if(habitText !== ''){
+    data.habits.push({ text: habitText, completed: false, streak: 0 });
+    localStorage.setItem('habitData', JSON.stringify(data));
+    habitInput.value = '';
+    renderHabits();
+  }
+});
+
+function renderHabits(){
+  habitList.innerHTML = '';
+  data.habits.forEach((habit, index) => {
+    const li = document.createElement('li');
+    li.classList.add('habit-item');
+
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('habit-header');
+
+    const habitText = document.createElement('span');
+    habitText.classList.add('habit-text');
+    habitText.textContent = habit.text;
+
+    const streak = document.createElement('span');
+    streak.classList.add('streak');
+    streak.textContent = `🔥 Streak: ${habit.streak}`;
+
+    headerDiv.appendChild(habitText);
+    headerDiv.appendChild(streak);
+
+    const progressBar = document.createElement('div');
+    progressBar.classList.add('progress-bar');
+    const progress = document.createElement('div');
+    progress.classList.add('progress');
+    progress.style.width = habit.completed ? '100%' : '0%';
+    progressBar.appendChild(progress);
+
+    const btnDiv = document.createElement('div');
+    btnDiv.style.marginTop = '5px';
+
+    const completeBtn = document.createElement('button');
+    completeBtn.textContent = '✔';
+    completeBtn.classList.add('completeBtn');
+    completeBtn.addEventListener('click', () => toggleComplete(index));
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.classList.add('deleteBtn');
+    deleteBtn.addEventListener('click', () => deleteHabit(index));
+
+    btnDiv.appendChild(completeBtn);
+    btnDiv.appendChild(deleteBtn);
+
+    li.appendChild(headerDiv);
+    li.appendChild(progressBar);
+    li.appendChild(btnDiv);
+
+    habitList.appendChild(li);
+  });
+}
+
+function toggleComplete(index){
+  const habit = data.habits[index];
+  habit.completed = !habit.completed;
+  if(habit.completed) habit.streak += 1; // Increase streak
+  localStorage.setItem('habitData', JSON.stringify(data));
+  renderHabits();
+}
+
+function deleteHabit(index){
+  data.habits.splice(index,1);
+  localStorage.setItem('habitData', JSON.stringify(data));
+  renderHabits();
+}
+
+  </script>
+</body>
+</html>

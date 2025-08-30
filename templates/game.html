@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroPhoenix</title>
+  <style>
+   body, html {
+  margin: 0; padding: 0;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+/* Animated gradient background */
+#animated-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.games-container {
+  position: relative;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  box-sizing: border-box;
+}
+
+/* Menu buttons */
+.game-menu button {
+  padding: 15px 25px;
+  margin: 10px;
+  font-size: 1.2em;
+  border-radius: 12px;
+  border: none;
+  background: rgba(74,144,226,0.8);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.game-menu button:hover {
+  transform: scale(1.05);
+  background: rgba(74,144,226,1);
+}
+
+/* Game sections */
+.game-section {
+  display: none;
+  position: relative;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.9);
+  min-height: 450px;
+  color: #000;
+  box-sizing: border-box;
+}
+
+.game-area {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(to top, #c4f0fc, #ffffff);
+}
+
+/* Objects */
+.balloon {
+  position: absolute;
+  width:50px; height:70px;
+  border-radius: 50% 50% 50% 50%;
+  background: linear-gradient(#ff5f6d,#ffc371);
+  cursor: pointer;
+  animation: floatUp 6s linear forwards;
+}
+@keyframes floatUp { from{transform:translateY(350px)} to{transform:translateY(-80px)} }
+
+.zen-flower {
+  position: absolute;
+  width:40px; height:40px;
+  border-radius: 50%;
+  background: pink;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.zen-flower.grown { transform: scale(2); background: #ff69b4; }
+
+.bubble {
+  position: absolute;
+  width:40px; height:40px;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: floatUp 5s linear forwards;
+}
+
+.color-circle {
+  position: absolute;
+  width:60px; height:60px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.basket {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  width: 80px; height: 40px;
+  margin-left: -40px;
+  background: brown;
+  border-radius: 10px;
+}
+.fish {
+  position: absolute;
+  width: 40px; height: 20px;
+  border-radius: 50%;
+  background: orange;
+  top: 0;
+  animation: fall 4s linear forwards;
+}
+@keyframes fall { from{top:0} to{top:350px} }
+
+/* Buttons */
+button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  font-size: 1em;
+  border-radius: 12px;
+  border: none;
+  background: #4A90E2;
+  color: white;
+  cursor: pointer;
+}
+button:hover { background: #357ABD; }
+
+/* ------------------------ */
+/* ✅ RESPONSIVE TWEAKS */
+/* ------------------------ */
+@media (max-width: 768px) {
+  .games-container {
+    padding: 15px;
+  }
+  .game-menu button {
+    font-size: 1em;
+    padding: 12px 18px;
+    margin: 8px;
+  }
+  .game-section {
+    min-height: 380px;
+    padding: 15px;
+  }
+  .game-area {
+    height: 280px;
+  }
+  .balloon { width: 40px; height: 55px; }
+  .zen-flower, .bubble { width: 30px; height: 30px; }
+  .color-circle { width: 45px; height: 45px; }
+  .basket { width: 65px; height: 30px; margin-left: -32px; }
+  .fish { width: 32px; height: 16px; }
+}
+
+@media (max-width: 480px) {
+  .games-container {
+    padding: 10px;
+  }
+  .game-menu button {
+    font-size: 0.9em;
+    padding: 10px 15px;
+    margin: 6px;
+  }
+  .game-section {
+    min-height: 320px;
+    padding: 12px;
+  }
+  .game-area {
+    height: 220px;
+  }
+  .balloon { width: 35px; height: 50px; }
+  .zen-flower, .bubble { width: 25px; height: 25px; }
+  .color-circle { width: 40px; height: 40px; }
+  .basket { width: 55px; height: 25px; margin-left: -27px; }
+  .fish { width: 28px; height: 14px; }
+}
+
+  </style>
+</head>
+<body>
+
+  <div id="animated-bg"></div>
+
+  <div class="games-container">
+    <h1>🎮 Relaxing Mini Games</h1>
+    <p>Select a game to refresh your mind!</p>
+
+    <div class="game-menu">
+      <button onclick="showGame('balloon')">🎈 Balloon Pop</button>
+      <button onclick="showGame('zen')">🌸 Zen Garden</button>
+      <button onclick="showGame('bubble')">💧 Bubble Pop</button>
+      <button onclick="showGame('color')">🎨 Color Match</button>
+      <button onclick="showGame('fish')">🐟 Catch the Fish</button>
+    </div>
+
+    <!-- Balloon Game -->
+    <div id="balloonGame" class="game-section">
+      <h2>🎈 Pop the Balloons!</h2>
+      <div id="balloonArea" class="game-area"></div>
+      <p>Score: <span id="balloonScore">0</span></p>
+      <button onclick="backToMenu()">⬅ Back to Menu</button>
+    </div>
+
+    <!-- Zen Garden -->
+    <div id="zenGame" class="game-section">
+      <h2>🌸 Zen Garden</h2>
+      <div id="zenArea" class="game-area"></div>
+      <p>Flowers grown: <span id="zenScore">0</span></p>
+      <button onclick="backToMenu()">⬅ Back to Menu</button>
+    </div>
+
+    <!-- Bubble Pop -->
+    <div id="bubbleGame" class="game-section">
+      <h2>💧 Bubble Pop</h2>
+      <div id="bubbleArea" class="game-area"></div>
+      <p>Score: <span id="bubbleScore">0</span></p>
+      <button onclick="backToMenu()">⬅ Back to Menu</button>
+    </div>
+
+    <!-- Color Match -->
+    <div id="colorGame" class="game-section">
+      <h2>🎨 Color Match</h2>
+      <p>Target Color: <span id="targetColorText"></span></p>
+      <div id="colorArea" class="game-area"></div>
+      <p>Score: <span id="colorScore">0</span></p>
+      <button onclick="backToMenu()">⬅ Back to Menu</button>
+    </div>
+
+    <!-- Fish Catch -->
+    <div id="fishGame" class="game-section">
+      <h2>🐟 Catch the Fish</h2>
+      <div id="fishArea" class="game-area">
+        <div id="basket" class="basket"></div>
+      </div>
+      <p>Score: <span id="fishScore">0</span></p>
+      <button onclick="backToMenu()">⬅ Back to Menu</button>
+    </div>
+  </div>
+  <div class="navigation">
+      <a href="{{ url_for('explore') }}" class="back-btn">⬅ Back to Home</a>
+    </div>
+
+  <script>
+    // ---------- Menu ----------
+    function showGame(game){
+      document.querySelectorAll('.game-section').forEach(sec=>sec.style.display='none');
+      document.getElementById(game+'Game').style.display='block';
+    }
+    function backToMenu(){ document.querySelectorAll('.game-section').forEach(sec=>sec.style.display='none'); }
+
+    // ---------- Balloon ----------
+    const balloonArea=document.getElementById('balloonArea');
+    const balloonScoreSpan=document.getElementById('balloonScore');
+    let balloonScore=0;
+    setInterval(()=>{
+      if(balloonArea.parentNode.style.display==='none') return;
+      const balloon=document.createElement('div');
+      balloon.className='balloon';
+      balloon.style.left=Math.random()*500+'px';
+      balloon.addEventListener('click',()=>{balloonScore++;balloonScoreSpan.textContent=balloonScore;balloon.remove();});
+      balloonArea.appendChild(balloon);
+      setTimeout(()=>balloon.remove(),6000);
+    },2000);
+
+    // ---------- Zen ----------
+    const zenArea=document.getElementById('zenArea');
+    const zenScoreSpan=document.getElementById('zenScore');
+    let zenScore=0;
+    setInterval(()=>{
+      if(zenArea.parentNode.style.display==='none') return;
+      const flower=document.createElement('div');
+      flower.className='zen-flower';
+      flower.style.left=Math.random()*700+'px';
+      flower.style.top=Math.random()*250+'px';
+      flower.addEventListener('click',()=>{
+        if(!flower.classList.contains('grown')){
+          flower.classList.add('grown');
+          zenScore++; zenScoreSpan.textContent=zenScore;
+        }
+      });
+      zenArea.appendChild(flower);
+      setTimeout(()=>flower.remove(),6000);
+    },2000);
+
+    // ---------- Bubble ----------
+    const bubbleArea=document.getElementById('bubbleArea');
+    const bubbleScoreSpan=document.getElementById('bubbleScore');
+    let bubbleScore=0;
+    setInterval(()=>{
+      if(bubbleArea.parentNode.style.display==='none') return;
+      const bubble=document.createElement('div');
+      bubble.className='bubble';
+      bubble.style.left=Math.random()*500+'px';
+      bubble.style.background=Math.random()>0.2?"rgba(173,216,230,0.7)":"rgba(255,0,0,0.7)";
+      bubble.addEventListener('click',()=>{
+        if(bubble.style.background.includes('255,0,0')) bubbleScore--;
+        else bubbleScore++;
+        bubbleScoreSpan.textContent=bubbleScore;
+        bubble.remove();
+      });
+      bubbleArea.appendChild(bubble);
+      setTimeout(()=>bubble.remove(),5000);
+    },1500);
+
+    // ---------- Color Match ----------
+    const colorArea=document.getElementById('colorArea');
+    const colorScoreSpan=document.getElementById('colorScore');
+    const targetColorText=document.getElementById('targetColorText');
+    let colorScore=0, targetColor='';
+
+    function randomColor(){
+      const colors=['red','blue','green','yellow','purple'];
+      return colors[Math.floor(Math.random()*colors.length)];
+    }
+    function newRound(){
+      targetColor=randomColor();
+      targetColorText.textContent=targetColor;
+      colorArea.innerHTML='';
+      for(let i=0;i<5;i++){
+        const circle=document.createElement('div');
+        circle.className='color-circle';
+        const c=randomColor();
+        circle.style.background=c;
+        circle.style.left=Math.random()*700+'px';
+        circle.style.top=Math.random()*250+'px';
+        circle.addEventListener('click',()=>{
+          if(c===targetColor){ colorScore++; }
+          else{ colorScore--; }
+          colorScoreSpan.textContent=colorScore;
+          newRound();
+        });
+        colorArea.appendChild(circle);
+      }
+    }
+    setInterval(()=>{ if(colorArea.parentNode.style.display!=='none') newRound(); },6000);
+
+    // ---------- Fish Catch ----------
+    const fishArea=document.getElementById('fishArea');
+    const basket=document.getElementById('basket');
+    const fishScoreSpan=document.getElementById('fishScore');
+    let fishScore=0, basketX=fishArea.offsetWidth/2;
+
+    document.addEventListener('mousemove',(e)=>{
+      if(fishArea.parentNode.style.display==='none') return;
+      const rect=fishArea.getBoundingClientRect();
+      basketX=e.clientX-rect.left-40;
+      basket.style.left=basketX+'px';
+    });
+
+    setInterval(()=>{
+      if(fishArea.parentNode.style.display==='none') return;
+      const fish=document.createElement('div');
+      fish.className='fish';
+      fish.style.left=Math.random()*500+'px';
+      fishArea.appendChild(fish);
+      const fall=setInterval(()=>{
+        const fishRect=fish.getBoundingClientRect();
+        const basketRect=basket.getBoundingClientRect();
+        if(!(fish.parentNode && basket.parentNode)) return clearInterval(fall);
+        if(fishRect.bottom>=basketRect.top && fishRect.left<basketRect.right && fishRect.right>basketRect.left){
+          fishScore++; fishScoreSpan.textContent=fishScore;
+          fish.remove(); clearInterval(fall);
+        }
+      },100);
+      setTimeout(()=>{fish.remove();clearInterval(fall);},4000);
+    },2000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroPhoenix</title>
+  <style>
+    body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: rgba(255,255,255,0.95);
+  padding: 20px 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.massage-steps img {
+  width: 80%;
+  max-width: 300px;
+  margin: 15px 0;
+  border-radius: 15px;
+}
+
+.step {
+  display: none;
+  animation: fade 0.5s;
+}
+
+.step.active {
+  display: block;
+}
+
+.buttons {
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  background: #4A90E2;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background: #357ABD;
+}
+
+.homeBtn {
+  background: #FF8A65;
+}
+
+.homeBtn:hover {
+  background: #E76B50;
+}
+
+@keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* ---------------- RESPONSIVE FIXES ---------------- */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px 20px;
+  }
+
+  button {
+    width: 100%;
+    max-width: 250px;
+    font-size: 0.95rem;
+  }
+
+  .massage-steps img {
+    width: 90%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px 15px;
+    border-radius: 12px;
+  }
+
+  .massage-steps img {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💆‍♀️ Self-Massage for Stress Relief</h1>
+    <p>Follow these steps to relax your muscles and reduce stress.</p>
+
+    <div class="massage-steps">
+      <div class="step active" id="step1">
+        <h2>Step 1: Head Massage</h2>
+        <p>Use your fingertips to gently massage your scalp in circular motions for 1-2 minutes.</p>
+       <img src="https://plus.unsplash.com/premium_photo-1661274213751-0ccaaffdecac?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fFN0ZXAlMjAxJTNBJTIwSGVhZCUyME1hc3NhZ2UlMjBVc2UlMjB5b3VyJTIwZmluZ2VydGlwcyUyMHRvJTIwZ2VudGx5JTIwbWFzc2FnZSUyMHlvdXIlMjBzY2FscCUyMGluJTIwY2lyY3VsYXIlMjBtb3Rpb25zJTIwZm9yJTIwMSUyMDIlMjBtaW51dGVzLnxlbnwwfHwwfHx8MA%3D%3D" alt="Head Massage">
+
+      </div>
+      <div class="step" id="step2">
+        <h2>Step 2: Shoulder Massage</h2>
+        <p>Rub your shoulders gently with circular motions, releasing tension.</p>
+        <img src="https://plus.unsplash.com/premium_photo-1661771960993-02db2120b719?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8U2hvdWxkZXIlMjBNYXNzYWdlJTIwUnViJTIweW91ciUyMHNob3VsZGVycyUyMGdlbnRseSUyMHdpdGglMjBjaXJjdWxhciUyMG1vdGlvbnMlMkMlMjByZWxlYXNpbmclMjB0ZW5zaW9uJTIwc2ltcGxlfGVufDB8fDB8fHww" alt="Shoulder Massage">
+
+      </div>
+      <div class="step" id="step3">
+        <h2>Step 3: Hand Massage</h2>
+        <p>Press and knead each finger and palm slowly for a relaxing effect.</p>
+        <img src="https://plus.unsplash.com/premium_photo-1661895736986-b563970b6f86?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fEhhbmQlMjBNYXNzYWdlJTIwUHJlc3MlMjBhbmQlMjBrbmVhZCUyMGVhY2glMjBmaW5nZXIlMjBhbmQlMjBwYWxtJTIwc2xvd2x5JTIwZm9yJTIwYSUyMHJlbGF4aW5nJTIwZWZmZWN0LiUyMCUyMEhhbmQlMjBNYXNzYWdlfGVufDB8fDB8fHww" alt="Hand Massage">
+      </div>
+      <div class="step" id="step4">
+        <h2>Step 4: Neck Massage</h2>
+        <p>Gently knead your neck muscles and shoulders to release stiffness.</p>
+        <img src="https://images.unsplash.com/photo-1643237131522-bbf79b062ca1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8U3RlcCUyMDQlM0ElMjBOZWNrJTIwTWFzc2FnZSUyMEdlbnRseSUyMGtuZWFkJTIweW91ciUyMG5lY2slMjBtdXNjbGVzJTIwYW5kJTIwc2hvdWxkZXJzJTIwdG8lMjByZWxlYXNlJTIwc3RpZmZuZXNzLnxlbnwwfHwwfHx8MA%3D%3D" alt="Neck Massage">
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button id="prevBtn">⬅ Previous</button>
+      <button id="nextBtn">Next ➡</button>
+    </div>
+
+    <button onclick="window.location.href='{{ url_for('explore') }}' " class="homeBtn">🏠 Back to Home</button>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.step');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentStep = 0;
+showStep(currentStep);
+
+function showStep(n){
+  steps.forEach(step => step.classList.remove('active'));
+  steps[n].classList.add('active');
+
+  prevBtn.style.display = n === 0 ? 'none' : 'inline-block';
+  nextBtn.textContent = n === steps.length - 1 ? 'Finish ✔' : 'Next ➡';
+}
+
+nextBtn.addEventListener('click', () => {
+  if(currentStep < steps.length - 1){
+    currentStep++;
+    showStep(currentStep);
+  } else {
+    alert("🎉 Great job! You completed the massage guide.");
+    currentStep = 0;
+    showStep(currentStep);
+  }
+});
+
+prevBtn.addEventListener('click', () => {
+  if(currentStep > 0){
+    currentStep--;
+    showStep(currentStep);
+  }
+});
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroPhoenix</title>
+  <style>
+   
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Background slideshow */
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .bg-slide {
+      position: absolute;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      filter: brightness(85%) contrast(105%) saturate(115%);
+    }
+
+    .bg-slide.active {
+      opacity: 1;
+    }
+
+    /* Login box */
+    .login-box {
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.92);
+      padding: 40px 30px;
+      border-radius: 18px;
+      text-align: center;
+      width: 350px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      font-size: 26px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border: 2px solid #4A90E2;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .login-box input:focus {
+      border-color: #6FC3DF;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #4A90E2, #6FC3DF);
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .login-box button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #3a78c0, #58b7d1);
+    }
+
+    .login-box p {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .login-box a {
+      color: #4A90E2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 220px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 20px;
+      border-right: 2px solid #ddd;
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      color: #2c3e50;
+      margin-bottom: 25px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      font-size: 16px;
+      color: #4A90E2;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      color: #2c3e50;
+    }
+
+    /* Main content */
+    .main-content {
+      margin-left: 250px;
+      padding: 40px;
+      color: #fff;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .main-content h1 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .quote {
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 40px;
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    .section h2 {
+      margin-bottom: 15px;
+    }
+
+    /* Mood tracker */
+    .mood-buttons button {
+      font-size: 22px;
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .mood-buttons button:hover {
+      transform: scale(1.2);
+    }
+
+    /* Daily quote */
+    #quote-text {
+      font-size: 18px;
+      margin: 10px 0;
+      font-style: italic;
+    }
+
+    /* ----------------- RESPONSIVE FIXES ----------------- */
+    @media (max-width: 1024px) {
+      .main-content {
+        margin-left: 220px;
+        padding: 25px;
+      }
+      .login-box {
+        width: 300px;
+        padding: 30px 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 180px;
+        padding: 20px 15px;
+      }
+      .main-content {
+        margin-left: 190px;
+        padding: 20px;
+      }
+      .main-content h1 {
+        font-size: 22px;
+      }
+      .login-box {
+        width: 280px;
+        padding: 25px 18px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 2px solid #ddd;
+      }
+      .main-content {
+        margin-left: 0;
+        margin-top: 10px;
+        padding: 15px;
+      }
+      .login-box {
+        width: 90%;
+        max-width: 300px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .login-box {
+        width: 95%;
+        padding: 20px 15px;
+      }
+      .login-box h2 {
+        font-size: 20px;
+      }
+      .main-content h1 {
+        font-size: 20px;
+      }
+      #quote-text {
+        font-size: 16px;
+      }
+    }
+</style>
+
+
+</head>
+<body>
+    
+
+  <!-- Background slideshow -->
+  <div class="background">
+    <div class="bg-slide active" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80');"></div>
+    <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
+    <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80');"></div>
+    <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80');"></div>
+    <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=1600&q=80');"></div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2 id="username-display">Hi, User 👋</h2>
+    <ul>
+      <li><a href="{{ url_for('relax') }}">🌿 Relax & Recharge</a></li>
+      <!-- <li><a href="#">🌿 Relax</a></li> -->
+       <!-- <li><a href="#">😃 Mood Detection</a></li> -->
+      <li><a href="{{ url_for('journal') }}">📖 My Journal</a></li>
+      <!-- <li><a href="#">💬 Chatbot</a></li> -->
+       <li><a href="{{ url_for('habbit') }}">🌿 Habit Tracker</a></li>
+       <li><a href="{{ url_for('game') }}">🎮 Mini Games</a></li>
+      <li><a href="{{ url_for('massage') }}">💆‍♀️ Self Massage</a></li>
+      <li><a href="{{ url_for('chatbot') }}">🤖 Chat with AI</a></li>
+      <li><a href="{{ url_for('resources') }}" >📖 Resources</a></li>
+      <!-- <li><a href="index.html">🚪 Logout</a></li> -->
+      <li><a href="{{ url_for('logout') }}" class="btn-logout">🔒 Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <h1>Welcome to Your Stress Booster Space ✨</h1>
+    <p class="quote">"Take a deep breath. You’re doing great 🌸"</p>
+
+    <!-- Mood tracker -->
+    <div class="section">
+      <h2>How are you feeling today?</h2>
+      <div class="mood-buttons">
+        <button onclick="setMood('😊')">😊</button>
+        <button onclick="setMood('😐')">😐</button>
+        <button onclick="setMood('😔')">😔</button>
+        <button onclick="setMood('😡')">😡</button>
+      </div>
+      <p id="mood-result"></p>
+    </div>
+
+    <!-- Relaxation sounds -->
+    <div class="section">
+      <h2>Relax with Sounds 🎵</h2>
+      <button onclick="playSound()">Play Calm Music</button>
+      <button onclick="stopSound()">Stop</button>
+      <audio id="calm-music" loop>
+        <source src="static/audio/music.mp3">
+      </audio>
+    </div>
+        <!-- Daily Quote Generator -->
+    <div class="section">
+      <h2>Daily Motivation ✨</h2>
+      <p id="quote-text">"Believe in yourself and all that you are."</p>
+      <button onclick="newQuote()">New Quote</button>
+    </div>
+
+    <!-- Breathing Exercise
+    <div class="section">
+      <h2>Breathe with Me 🌬️</h2>
+      <div class="breathing-circle" id="breathing-circle"></div>
+      <p id="breathing-text">Click start to begin</p>
+      <button onclick="startBreathing()">Start</button>
+    </div>
+
+    To-Do List
+    <div class="section">
+      <h2>My To-Do List 📝</h2>
+      <input type="text" id="todo-input" placeholder="Enter a task">
+      <button onclick="addTask()">Add</button>
+      <ul id="todo-list"></ul>
+    </div> -->
+
+
+  </div>
+
+  <script>
+    // Background slideshow logic
+let slides = document.querySelectorAll(".bg-slide");
+let index = 0;
+
+setInterval(() => {
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 7000); // Change every 7 seconds
+
+
+function loginUser(e) {
+  e.preventDefault();
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+  if (user === "user" && pass === "1234") {
+    localStorage.setItem("username", user); // Save username
+    window.location.href = "home.html"; // redirect
+  } else {
+    alert("Invalid credentials ❌ (try user/1234)");
+  }
+}
+function setMood(mood) {
+  let moodResult = document.getElementById("mood-result");
+
+  if (mood === "😊") {
+    moodResult.innerText = "You’re happy! 🎉 → Redirecting to Journal...";
+    setTimeout(() => { window.location.href = "{{ url_for('journal') }}"; }, 2000);
+  } 
+  else if (mood === "😐") {
+    moodResult.innerText = "Feeling neutral 🌿 → Redirecting to Resources...";
+    setTimeout(() => { window.location.href = "{{ url_for('resources') }}"; }, 2000);
+  } 
+  else if (mood === "😔") {
+    moodResult.innerText = "Feeling low 💙 → Redirecting to Relax page...";
+    setTimeout(() => { window.location.href = "{{ url_for('relax') }}"; }, 2000);
+  } 
+  else if (mood === "😡") {
+    moodResult.innerText = "Angry 😡 → Redirecting to Chatbot...";
+    setTimeout(() => { window.location.href = "{{ url_for('chatbot') }}"; }, 2000);
+  }
+}
+function playSound() {
+  let music = document.getElementById("calm-music");
+  music.play().catch(err => {
+    console.log("Play blocked by browser, try clicking the button again:", err);
+  });
+}
+
+function stopSound() {
+  let music = document.getElementById("calm-music");
+  music.pause();
+  music.currentTime = 0;
+}
+let quotes = [
+  "Breathe. You’re stronger than you think 🌸",
+  "This too shall pass 🌿",
+  "Be kind to your mind 💙",
+  "Small steps every day lead to big change ✨",
+  "Smile, and let the stress fade away 🌞"
+];
+
+function newQuote() {
+  let random = Math.floor(Math.random() * quotes.length);
+  document.getElementById("quote-text").innerText = quotes[random];
+}
+// let breathing;
+// function startBreathing() {
+//   let circle = document.getElementById("breathing-circle");
+//   let text = document.getElementById("breathing-text");
+//   let state = 0;
+
+//   if (breathing) clearInterval(breathing);
+
+//   breathing = setInterval(() => {
+//     if (state === 0) {
+//       circle.style.transform = "scale(1.5)";
+//       text.innerText = "Inhale... 🌬️";
+//       state = 1;
+//     } else {
+//       circle.style.transform = "scale(1)";
+//       text.innerText = "Exhale... 😌";
+//       state = 0;
+//     }
+//   }, 4000); // 4 seconds inhale, 4 seconds exhale
+// }
+// function addTask() {
+//   let input = document.getElementById("todo-input");
+//   let task = input.value.trim();
+//   if (task === "") return;
+
+//   let li = document.createElement("li");
+//   li.innerHTML = `${task} <button onclick="toggleTask(this)">✔</button>`;
+//   document.getElementById("todo-list").appendChild(li);
+
+//   input.value = "";
+// }
+
+// function toggleTask(btn) {
+//   btn.parentElement.classList.toggle("completed");
+// }
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="./static/images/finallogo.png">
+<title>NeuroPhoenix</title>
+<style>
+body {
+  margin: 0;
+  height: 400vh; /* extend page for scroll */
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  background: black;
+}
+
+/* Video */
+.scroll-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.scroll-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Overlay text */
+.overlay-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  transition: opacity 1s ease, transform 1s ease;
+  max-width: 90%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 3vw;
+  line-height: 1.6;
+  pointer-events: none;
+
+  /* Box styling */
+  background: rgba(255,255,255,0.8);
+  color: black;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Button styling */
+.get-started {
+  display: inline-block;
+  padding: 15px 35px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 20px;
+  animation: pulse 2s infinite;
+  pointer-events: auto; /* enable click */
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Visible state */
+.visible { opacity:1; transform: translate(-50%, -50%) scale(1.05); }
+
+/* Exit animations */
+.exit-left   { transform: translate(-120%, -50%) scale(0.9); opacity:0; }
+.exit-right  { transform: translate(20%, -50%) scale(0.9); opacity:0; }
+.exit-bottom { transform: translate(-50%, 20%) scale(0.9); opacity:0; }
+
+/* Sound toggle button */
+#soundToggle {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  padding: 10px 20px; 
+  border-radius: 8px; 
+  border: none; 
+  background: #FFD369; 
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 999;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 1024px){
+  .overlay-text { font-size: 4vw; padding: 18px 25px; }
+  .get-started { font-size: 1.3rem; padding: 12px 28px; }
+}
+
+@media (max-width: 768px){
+  .overlay-text { font-size: 4.5vw; padding: 15px 20px; }
+  .get-started { font-size: 1.1rem; padding: 10px 22px; }
+  #soundToggle { padding: 8px 16px; font-size: 0.9rem; bottom: 15px; right: 15px; }
+}
+
+@media (max-width: 480px){
+  .overlay-text { font-size: 5vw; padding: 12px 18px; border-radius: 10px; }
+  .get-started { font-size: 1rem; padding: 8px 18px; border-radius: 8px; }
+  #soundToggle { padding: 6px 12px; font-size: 0.8rem; bottom: 10px; right: 10px; }
+}
+
+</style>
+</head>
+<body>
+
+<section class="scroll-container">
+  <video id="scrollVideo" muted autoplay playsinline preload="auto" loop>
+    <source src="{{ url_for('static', filename='video/youth.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</section>
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="{{ url_for('static', filename='audio/music.mp3') }}" type="audio/mpeg">
+</audio>
+<button id="soundToggle">🔊 Enable Sound</button>
+
+<div id="text1" class="overlay-text">🌱 You are not alone.</div>
+<div id="text2" class="overlay-text">💙 Mental health matters as much as physical health.</div>
+<div id="text3" class="overlay-text">🤝 Reaching out for help is a sign of strength.</div>
+<div id="text4" class="overlay-text">
+  🌍 Together, we can break the stigma.<br><br>
+  <a href="{{ url_for('auth') }}" class="get-started">Get Started</a>
+
+
+</div>
+
+<script>
+  const video = document.getElementById("scrollVideo");
+  const texts = [
+    document.getElementById("text1"),
+    document.getElementById("text2"),
+    document.getElementById("text3"),
+    document.getElementById("text4")
+  ];
+
+  video.addEventListener("loadedmetadata", () => {
+    const duration = video.duration;
+
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const scrollFraction = scrollTop / maxScroll;
+
+      // Sync video with scroll
+      video.currentTime = duration * scrollFraction;
+
+      // Animate texts
+      texts.forEach((text,index)=>{
+        const start = index*0.25;
+        const end = start+0.25;
+        if(scrollFraction>=start && scrollFraction<end){
+          text.classList.add("visible");
+          text.classList.remove("exit-left","exit-right","exit-bottom");
+        } else {
+          text.classList.remove("visible");
+          if(scrollFraction<start) text.classList.add("exit-left");
+          else text.classList.add(index%2===0?"exit-right":"exit-bottom");
+        }
+      });
+    });
+  });
+
+   //Handle background music toggle 
+  const music = document.getElementById("bgMusic");
+  const toggle = document.getElementById("soundToggle");
+
+  toggle.addEventListener("click", () => {
+    if (music.paused) {
+      music.play();
+      toggle.textContent = "🔈 Sound On";
+    } else {
+      music.pause();
+      toggle.textContent = "🔊 Enable Sound";
+    }
+  });
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroPhoenix</title>
+  <style>
+  /* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Background */
+body, html {
+  height: 100%;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Soft gradient background */
+.resources-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  z-index: -1;
+}
+
+/* Main Box */
+.resources-box {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  animation: fadeIn 1.5s ease;
+}
+
+/* Section Styling */
+.section {
+  margin: 25px 0;
+  text-align: left;
+}
+
+.section h2 {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.book-list li {
+  margin: 8px 0;
+}
+
+.book-list a {
+  text-decoration: none;
+  color: #0066cc;
+}
+
+.book-list a:hover {
+  text-decoration: none;
+}
+
+/* Quotes */
+blockquote {
+  font-style: italic;
+  background: #f4f4f9;
+  padding: 15px;
+  border-left: 4px solid #6c63ff;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+/* Buttons */
+button, .btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #6c63ff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+button:hover, .btn:hover {
+  background: #4b47cc;
+}
+
+.navigation {
+  margin-top: 20px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 1024px) {
+  .resources-box {
+    margin: 30px 20px;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .resources-box {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .section h2 {
+    font-size: 1.2rem;
+  }
+
+  .book-list li {
+    font-size: 0.95rem;
+  }
+
+  button, .btn {
+    width: 100%;
+    max-width: 250px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .resources-box {
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .section h2 {
+    font-size: 1rem;
+  }
+
+  .book-list li {
+    font-size: 0.9rem;
+  }
+
+  blockquote {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  button, .btn {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="resources-bg"></div>
+
+  <div class="resources-box">
+    <h1>🧠 NeuroPhoenix Helpline</h1>
+    <br>
+    <p>Welcome to NeuroPhoenix. We are here to support you with mental health and emotional well-being.</p>
+
+    <div class="section">
+      <h2>📞 Contact Us</h2>
+      <p>You can reach us through:</p>
+      <br>
+      <ul>
+        <!-- <li>📱 Phone: <a href="tel:+911800123456">+91 1800-123-456</a></li> -->
+        <li>📧 Email: <a href="mailto:support@neuroPhoenix.org">support@neuroPhoenix.org</a></li>
+        <!-- <li>🌐 Website: <a href="https://neuromind.org" target="_blank">neuromind.org</a></li> -->
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>💬 Chat with Us</h2>
+      <p>We provide 24/7 chat support for anyone who needs immediate help.</p>
+      <br>
+      <button onclick="alert('Chat feature coming soon!')">Start Chat</button>
+    </div>
+
+    <div class="navigation">
+      <a href="{{ url_for('resources') }}" class="btn">⬅ Back to Resources</a>
+    </div>
+  </div>
+</body>
+</html>
