@@ -104,7 +104,8 @@ def auth():
 
 @app.route("/login/google")
 def login_google():
-    redirect_uri = _abs_url("auth_google_callback")
+    redirect_uri = os.getenv("OAUTH_REDIRECT_URI", _abs_url("auth_google_callback"))
+
     return google.authorize_redirect(redirect_uri)
 
 @app.route("/auth/google/callback")
@@ -115,7 +116,7 @@ def auth_google_callback():
     email = info.get("email")
     name = info.get("name")
 
-    cursor = mydb.connect.cursor()
+    cursor = mydb.cursor()
     cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
     user = cursor.fetchone()
     if not user:
