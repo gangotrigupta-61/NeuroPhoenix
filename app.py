@@ -1,7 +1,7 @@
 import os
 import secrets
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
-from flask_mysqldb import MySQL
+import  mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 from authlib.integrations.flask_client import OAuth
 from urllib.parse import urljoin
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 
 # Generate a random key if not found in .env
-secret_key = os.getenv("FLASK_SECRET_KEY")
+secret_key = os.get("FLASK_SECRET_KEY")
 if not secret_key:
     secret_key = secrets.token_hex(32)  # generates a secure random key
     print(f"[INFO] Generated secret key: {secret_key}")  # shows in terminal
@@ -21,17 +21,20 @@ import google.generativeai as genai
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_change_me")
+app.secret_key = os.get("FLASK_SECRET_KEY", "dev_secret_change_me")
 
 
 # ---- MySQL Config ----
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'srmcem@123'  # secure this later
-app.config['MYSQL_DB'] = 'mental_health_db'
-app.config['MYSQL_PORT'] = 3306
+mydb = mysql.connector.connect(
+    host=os.environ.get("DB_HOST"),
+    user=os.environ.get("DB_USER"),
+    password=os.environ.get("DB_PASSWORD"),
+    database=os.environ.get("DB_NAME"),
+    port=int(os.environ.get("DB_PORT"))
+)
 
-mysql = MySQL(app)
+
+
 
 # ---- Google OAuth Config ----
 oauth = OAuth(app)
@@ -67,27 +70,27 @@ def auth():
         email = request.form["email"].lower()
         password = request.form["password"]
 
-        cur = mysql.connection.cursor()
+        cursor = mydb.cursor()
 
         if action == "signup":
-            cur.execute("SELECT * FROM users WHERE email=%s", (email,))
-            if cur.fetchone():
+            cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
+            if cursor.fetchone():
                 flash("Email already registered. Please login.")
-                cur.close()
+                cursor.close()
                 return redirect(url_for("auth"))
 
             hashed_pw = generate_password_hash(password)
-            cur.execute("INSERT INTO users (email, password, auth_provider) VALUES (%s,%s,%s)", 
+            cursor.execute("INSERT INTO users (email, password, auth_provider) VALUES (%s,%s,%s)", 
                         (email, hashed_pw, "password"))
-            mysql.connection.commit()
-            cur.close()
+            mydb.commit()
+            cursor.close()
             flash("Signup successful. Please login!")
             return redirect(url_for("auth"))
 
         elif action == "login":
-            cur.execute("SELECT * FROM users WHERE email=%s", (email,))
-            user = cur.fetchone()
-            cur.close()
+            cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
+            user = cursor.fetchone()
+            cursor.close()
             if user and user[2] and check_password_hash(user[2], password):
                 session["user_id"] = user[0]
                 session["email"] = user[1]
@@ -112,17 +115,17 @@ def auth_google_callback():
     email = info.get("email")
     name = info.get("name")
 
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM users WHERE email=%s", (email,))
-    user = cur.fetchone()
+    cursor = mydb.connect.cursor()
+    cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
+    user = cursor.fetchone()
     if not user:
-        cur.execute("INSERT INTO users (email, name, auth_provider) VALUES (%s,%s,%s)", 
+        cursor.execute("INSERT INTO users (email, name, auth_provider) VALUES (%s,%s,%s)", 
                     (email, name, "google"))
-        mysql.connection.commit()
-        user_id = cur.lastrowid
+        mydb.commit()
+        user_id = cursor.lastrowid
     else:
         user_id = user[0]
-    cur.close()
+    cursor.close()
 
     session["user_id"] = user_id
     session["email"] = email
