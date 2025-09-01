@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 
 # Generate a random key if not found in .env
-secret_key = os.get("FLASK_SECRET_KEY")
+secret_key = os.getenv("FLASK_SECRET_KEY")
 if not secret_key:
     secret_key = secrets.token_hex(32)  # generates a secure random key
     print(f"[INFO] Generated secret key: {secret_key}")  # shows in terminal
@@ -21,7 +21,7 @@ import google.generativeai as genai
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.get("FLASK_SECRET_KEY", "dev_secret_change_me")
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_change_me")
 
 
 # ---- MySQL Config ----
