@@ -6,7 +6,7 @@ Demo Video: (Add link here)
 
 ## Overview
 
-NeuroPhoenix is a mental‑wellness web app designed to support students and individuals in managing their emotional health. It combines self‑care tools like journaling, relaxation rooms, and mini‑games with an AI‑powered chatbot that provides guidance and companionship. The goal is to make mental health support more approachable, interactive, and engaging.
+NeuroPhoenix is a mental‑wellness web app designed to support students and individuals in managing their emotional health. It combines self‑care tools like journaling, relaxation rooms, and mini‑games with an AI‑powered chatbot that provides guidance and companionship to Youth. The goal is to make mental health support more approachable, interactive, and engaging and guides youth in overcoming stigma and accessing help.
 
 ---
 
@@ -20,11 +20,27 @@ NeuroPhoenix is a mental‑wellness web app designed to support students and ind
 
 ---
 
+
+## Features
+
+✨ **Personal Journal** – Secure, private journaling to express thoughts and track moods.  
+🎵 **Relaxation Room** – Ambient sounds, guided breathing, and visual calmers for stress relief.  
+🤖 **AI Chatbot (Gemini-powered)** – Friendly, empathetic chatbot for guided conversations.  
+📅 **Habit Tracker** – Track daily self-care routines and build consistency.  
+🎮 **Mini-Games** – Light, interactive games for distraction and mood boosting.  
+🛡️ **Secure Authentication** – Login with Google OAuth (via Authlib).  
+📊 **Mood & Insight Dashboard (planned)** – Visualize trends from journals and habits.  
+🌐 **Deployed on Render** – Accessible anywhere, lightweight and fast.  
+🔒 **Privacy-First Design** – Local session management and protected database.
+
+---
+
 ## Table of Contents
 
-- [PsycheSail](#psychesail)
+- [NeuroPhoenix](#NeuroPhoenix)
   - [Overview](#overview)
   - [Contributors](#contributors)
+  - [Features](#Features)
   - [Inspiration](#inspiration)
   - [Goals](#goals)
   - [Built With](#built-with)
@@ -76,6 +92,7 @@ Mental health challenges among students and young professionals are rising, ofte
 
 ---
 
+
 ## Challenges
 
 * Setting up secure Google OAuth and handling callback origins.
@@ -83,16 +100,6 @@ Mental health challenges among students and young professionals are rising, ofte
 * Optimizing large media files (audio/video) for smooth performance.
 * Designing safe and empathetic AI chatbot responses.
 * Maintaining user session security and data privacy.
-
----
-
-## Accomplishments
-
-* Built a clean, mobile‑friendly UI with multiple wellness tools.
-* Integrated AI chatbot powered by Gemini.
-* Created journaling and habit‑tracking features.
-* Implemented relaxation activities (music, breathing/massage visuals).
-* Deployed successfully on Render with environment‑based configuration.
 
 ---
 
@@ -112,6 +119,7 @@ Mental health challenges among students and young professionals are rising, ofte
 * Expand help resources with geo‑aware hotlines and counselor connections.
 * Add multi‑language support for accessibility.
 * Improve AI chatbot with streaming and contextual memory.
+Our journey doesn't end here. NeuroPhoenix will continue evolving, guided by our commitment to providing comprehensive and effective mental health support for students.
 
 ---
 
