@@ -103,6 +103,23 @@ nav a:hover {
   font-size: 0.95em;
 }
 
+/* Button styling */
+.get-started {
+  display: inline-block;
+  padding: 15px 35px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 20px;
+  animation: pulse 2s infinite;
+  pointer-events: auto; /* enable click */
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -160,7 +177,10 @@ footer {
 <section class="hero">
   <h2>Welcome to NeuroPhoenix</h2>
   <p>Empowering youth to rise stronger by focusing on mental health, self-care, and growth.</p>
+  <p> 🌸 Feeling heavy? Let Serenica lift the weight. <br>🕊️ Turn stress into serenity - chat with Serenica.</p>
+  <a href="{{ url_for('chatbot') }}" class="get-started">Serenica</a>
 </section>
+
 
 <section class="resources">
   <a href="https://www.pdfdrive.com/self-help-books.html" target="_blank" class="resource-card">
