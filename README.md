@@ -119,7 +119,7 @@ Mental health challenges among students and young professionals are rising, ofte
 * Expand help resources with geo‑aware hotlines and counselor connections.
 * Add multi‑language support for accessibility.
 * Improve AI chatbot with streaming and contextual memory.
-Our journey doesn't end here. NeuroPhoenix will continue evolving, guided by our commitment to providing comprehensive and effective mental health support for students.
+* Our journey doesn't end here. NeuroPhoenix will continue evolving, guided by our commitment to providing comprehensive and effective mental health support for Youth.
 
 ---
 
