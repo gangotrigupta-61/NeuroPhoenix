@@ -14,9 +14,9 @@ NeuroPhoenix is a mental‑wellness web app designed to support students and ind
 
 1. [Annu Verma](https://www.linkedin.com/in/annu-verma-41a873326)
 2. [Gangotri Gupta](https://www.linkedin.com/in/gangotri-gupta-ba5764321)
-3. [Ishita Singh]()
-4. [Komal Yadav]()
-5. [Palak]()
+3. [Ishita Singh](https://www.linkedin.com/in/ishita-singh-b803a6328)
+4. [Komal Yadav](https://www.linkedin.com/in/komal-yadav-54a912328)
+5. [Palak](https://www.linkedin.com/in/palak-sharma-55606834)
 
 ---
 
