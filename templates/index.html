@@ -98,6 +98,64 @@ body {
   z-index: 999;
 }
 
+/* Scroll Indicator */
+.scroll-indicator {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  animation: fadeIn 2s ease-in-out forwards;
+  pointer-events: none;
+}
+
+.scroll-indicator .circle {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  padding: 15px 25px;
+  border-radius: 30px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 15px rgba(255,255,255,0.6);
+  animation: glow 2s infinite alternate;
+}
+
+.scroll-indicator span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* Arrow */
+.scroll-indicator .arrow {
+  width: 25px;
+  height: 25px;
+  border-left: 4px solid white;
+  border-bottom: 4px solid white;
+  transform: rotate(-45deg);
+  margin: 0 auto;
+  animation: bounce 1.5s infinite;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(-45deg); }
+  40% { transform: translateY(12px) rotate(-45deg); }
+  60% { transform: translateY(6px) rotate(-45deg); }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6; }
+  to   { box-shadow: 0 0 15px #ff5f6d, 0 0 30px #ffc371; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 1024px){
   .overlay-text { font-size: 4vw; padding: 18px 25px; }
@@ -115,7 +173,6 @@ body {
   .get-started { font-size: 1rem; padding: 8px 18px; border-radius: 8px; }
   #soundToggle { padding: 6px 12px; font-size: 0.8rem; bottom: 10px; right: 10px; }
 }
-
 </style>
 </head>
 <body>
@@ -126,20 +183,28 @@ body {
     Your browser does not support the video tag.
   </video>
 </section>
+
 <!-- Background Music -->
 <audio id="bgMusic" loop>
   <source src="{{ url_for('static', filename='audio/music.mp3') }}" type="audio/mpeg">
 </audio>
 <button id="soundToggle">🔊 Enable Sound</button>
 
+<!-- Scroll Down Indicator -->
+<div class="scroll-indicator" id="scrollHint">
+  <div class="circle">
+    <span>Scroll Down</span>
+    <div class="arrow"></div>
+  </div>
+</div>
+
+<!-- Overlay Texts -->
 <div id="text1" class="overlay-text">🌱 You are not alone.</div>
 <div id="text2" class="overlay-text">💙 Mental health matters as much as physical health.</div>
 <div id="text3" class="overlay-text">🤝 Reaching out for help is a sign of strength.</div>
 <div id="text4" class="overlay-text">
   🌍 Together, we can break the stigma.<br><br>
   <a href="{{ url_for('auth') }}" class="get-started">Get Started</a>
-
-
 </div>
 
 <script>
@@ -178,7 +243,7 @@ body {
     });
   });
 
-   //Handle background music toggle 
+  // Handle background music toggle 
   const music = document.getElementById("bgMusic");
   const toggle = document.getElementById("soundToggle");
 
@@ -192,8 +257,16 @@ body {
     }
   });
 
-
-
+  // Hide scroll hint after scrolling
+  const hint = document.getElementById("scrollHint");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      hint.style.opacity = "0";
+      hint.style.transition = "opacity 0.5s ease";
+    } else {
+      hint.style.opacity = "1";
+    }
+  });
 </script>
 </body>
 </html>
