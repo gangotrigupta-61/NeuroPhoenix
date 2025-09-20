@@ -1,8 +1,7 @@
 # NeuroPhoenix
-<<<<<<< HEAD
 =======
 
-Demo Video: (Add link here)
+Demo Video: (https://youtu.be/MNjW_LwjYLk)
 
 ---
 
@@ -124,6 +123,3 @@ Mental health challenges among students and young professionals are rising, ofte
 * Our journey doesn't end here. NeuroPhoenix will continue evolving, guided by our commitment to providing comprehensive and effective mental health support for Youth.
 
 ---
-
-
->>>>>>> a75ada78ef89c4c018682212144f3dfd6ce84588
