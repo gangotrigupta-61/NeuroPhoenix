@@ -1,8 +1,6 @@
 # NeuroPhoenix
-=======
 
 Demo Video: (https://youtu.be/MNjW_LwjYLk)
-
 ---
 
 ## Overview
